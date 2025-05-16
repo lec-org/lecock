@@ -1,9 +1,14 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, screen } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { createBrowserWindow } from './utils/window'
 
+const windowMap = new Map<string, BrowserWindow>()
+enum Windows {
+  MainWindow = 'mainWindow',
+  FloatWindow = 'floatWindow'
+}
 function createWindow(): void {
   // Create the browser window.
   const [mainWindow, { show: showMainWindow }] = createBrowserWindow({
@@ -11,29 +16,40 @@ function createWindow(): void {
     height: 670,
     show: false,
     resizable: false,
-    autoHideMenuBar: true,
+    autoHideMenuBar: false,
+    // transparent: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
+      nodeIntegration: true,
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
   })
-
+  windowMap.set(Windows.MainWindow, mainWindow)
+  console.log('调试')
   // 悬浮窗
   const [floatWindow, { show: showFloatWindow }] = createBrowserWindow({
-    width: 100,
-    height: 100,
+    width: 64,
+    height: 64,
     show: false,
     resizable: false,
     autoHideMenuBar: true,
-    frame: false,
-    transparent: true,
-    alwaysOnTop: true,
+    type: 'toolbar',
+    frame: false, // 无边框
+    // transparent: true, // 透明
+    alwaysOnTop: true, // 始终置于顶层
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
   })
+  windowMap.set(Windows.FloatWindow, floatWindow)
+
+  const { left, top } = {
+    left: screen.getPrimaryDisplay().workAreaSize.width - 160,
+    top: screen.getPrimaryDisplay().workAreaSize.height - 160
+  }
+  floatWindow.setPosition(left, top)
 
   mainWindow.on('ready-to-show', () => {
     showMainWindow()
@@ -75,6 +91,11 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
+  ipcMain.on('floatWindowMove', (_event, message) => {
+    const { x, y } = message
+    const floatWindow = windowMap.get(Windows.FloatWindow)
+    floatWindow?.setPosition(x, y)
+  })
 
   createWindow()
 
