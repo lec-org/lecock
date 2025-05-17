@@ -1,8 +1,9 @@
-import { JSX, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import './index.css'
-const FloatClock = (): JSX.Element => {
+const FloatClock = (): React.ReactNode => {
   const floatWindowRef = useRef<HTMLDivElement>(null)
   const bias = useRef({ biasX: 0, biasY: 0 })
+
   const initFloatWindow = (): void => {
     floatWindowRef.current?.addEventListener('mousedown', (e) => {
       switch (e.button) {
@@ -19,15 +20,18 @@ const FloatClock = (): JSX.Element => {
       document.removeEventListener('mousemove', moveEvent)
     })
   }
+
   const moveEvent = (e: MouseEvent): void => {
     window.api.floatWindowMove({
       x: e.screenX - bias.current.biasX,
       y: e.screenY - bias.current.biasY
     })
   }
+
   useEffect(() => {
     initFloatWindow()
   })
+
   return (
     <div className="float-clock" ref={floatWindowRef}>
       Float

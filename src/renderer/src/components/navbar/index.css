@@ -1,11 +1,11 @@
 .nav-container {
   width: 64px;
+  border-radius: 12px;
   height: fit-content;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.2);
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.5);
   display: flex;
   flex-direction: column;
   gap: 5px;
-
-  margin: auto 0;
+  margin: 10px 0;
 }

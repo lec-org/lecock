@@ -1,0 +1,33 @@
+.home-page-container {
+  overflow: auto;
+
+  .home-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-auto-rows: 50px;
+    grid-gap: 20px;
+
+    .area {
+      background-color: #fafaff;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .clock-area {
+      grid-row: span 8;
+      width: 100%;
+    }
+    .message-area {
+      grid-row: span 10;
+      height: 500px;
+    }
+    .schedule-area {
+      grid-row: span 8;
+      height: 400px;
+    }
+    .card-area {
+      grid-row: span 8;
+      height: 400px;
+    }
+  }
+}

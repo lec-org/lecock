@@ -1,22 +1,23 @@
-import Avatar from './components/avatar'
 import NavBar from './components/navbar'
-import Setting from './components/setting'
 import cls from 'classnames'
 
 import './assets/base.css'
-function App(): React.JSX.Element {
+import Avatar from './components/avatar'
+import Setting from './components/setting'
+import { Outlet } from 'react-router'
+function App(): React.ReactNode {
   return (
-    <div
-      className={cls('main', {
-        'mica-light ': true
-      })}
-    >
-      <div className="left-nav-bar">
-        <Avatar />
-        <NavBar />
-        <Setting />
+    <div className={cls('main')}>
+      <div className="left-bar">
+        <div className="left-content-container">
+          <Avatar />
+          <NavBar />
+          <Setting />
+        </div>
       </div>
-      <div className="right-main-content"></div>
+      <div className="right-main-content">
+        <Outlet />
+      </div>
     </div>
   )
 }

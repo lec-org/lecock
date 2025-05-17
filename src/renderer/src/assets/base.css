@@ -2,13 +2,42 @@
   width: 100%;
   height: 100%;
   padding: 10px;
-  background: transparent;
+  background: rgba(242, 242, 250, 0.7);
+  display: flex;
+  gap: 10px;
+  overflow: hidden;
 
-  .left-nav-bar {
+  .left-bar {
     height: 100%;
+    width: 80px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .left-content-container {
+      padding: 10px 5px;
+      width: 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(237, 237, 245, 0.8);
+      border-radius: 16px;
+    }
   }
+  .right-main-content {
+    width: 100%;
+    border-radius: 12px;
+    flex: 1;
+    background-color: #fff;
+    overflow: auto;
+  }
+}
+
+.page {
+  min-height: 100vh;
+  padding: 10px;
 }
 
 .mica-light {

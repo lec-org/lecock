@@ -90,7 +90,6 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
   ipcMain.on('floatWindowMove', (_event, message) => {
     const { x, y } = message
     const floatWindow = windowMap.get(Windows.FloatWindow)
